@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const socket = require('socket.io');
 const app = express();
+const {checkPing} = require('./utils/ping.util');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,8 +23,9 @@ const io = socket(server);
 io.on('connection', require('./sockets/ping.socket'))
 
 let i = 0;
-setInterval(() => {
-  io.sockets.emit('ping-update', i++);
+setInterval(async () => {
+  const ping = await checkPing('10.15.6.129');
+  io.sockets.emit('ping-update', ping);
 }, 1000)
 
 

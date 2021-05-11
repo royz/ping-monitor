@@ -24,3 +24,6 @@ setInterval(() => {
   checkPing('10.15.6.129').then((ping) => console.log(`${i}. ${ping}ms`))
   i++;
 }, 1000)
+
+
+module.exports = {checkPing};
