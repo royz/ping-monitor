@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const path = require('path');
-
+const socket = require('socket.io');
 const app = express();
 
 // view engine setup
@@ -14,8 +14,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/index'));
 
-
 const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`app listening on port ${port}...`))
+const server = app.listen(port, () => console.log(`app listening on port ${port}...`))
 
-module.exports = app;
+// set up websocket
+const io = socket(server);
+io.on('connection', require('./sockets/ping.socket'))
+
+let i = 0;
+setInterval(() => {
+  io.sockets.emit('ping-update', i++);
+}, 1000)
+
+
+module.exports = io;

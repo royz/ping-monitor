@@ -9,7 +9,9 @@
   "dependencies": {
     "dotenv": "^9.0.2",
     "express": "~4.16.1",
-    "hbs": "~4.0.4"
+    "hbs": "~4.0.4",
+    "ping": "^0.4.1",
+    "socket.io": "^4.1.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
